@@ -1,5 +1,5 @@
 import fs from 'node:fs'
-import { defineNuxtConfig } from 'nuxt'
+import { defineNuxtConfig } from 'nuxt/config'
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -19,5 +19,6 @@ export default defineNuxtConfig({
     publicKey:
       process.env.NUXT_PUBLIC_KEY || fs.readFileSync('./public.key', 'utf-8'),
   },
-  modules: ['@nuxt/content', '@nuxtjs/tailwindcss'],
+
+  modules: ['@nuxt/content', '@nuxtjs/tailwindcss', '@nuxt/devtools'],
 })

@@ -3,7 +3,14 @@ import * as jose from 'jose'
 export default defineEventHandler(async event => {
   if (!event.req.url?.startsWith('/api/_content/query')) return
 
-  const { token } = useCookies(event)
+  const token = getCookie(event, 'token')
+
+  if(!token)
+    throw createError({
+      statusCode: 403,
+      message: 'Invalid token',
+    })
+  
 
   try {
     const publicKey = await jose.importSPKI(
@@ -17,6 +24,9 @@ export default defineEventHandler(async event => {
 
     if (payload['urn:n3dium:claim']) return
   } catch {}
+
+console.log('invalid token!')
+
 
   throw createError({
     statusCode: 403,

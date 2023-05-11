@@ -1,7 +1,7 @@
 import * as jose from 'jose'
 
 export default defineEventHandler(async event => {
-  const { username, password } = await useBody(event)
+  const { username, password } = await readBody(event)
 
   if (username !== 'vue' || password !== 'ilovenuxt') {
     throw createError({
@@ -14,6 +14,7 @@ export default defineEventHandler(async event => {
     useRuntimeConfig().privateKey,
     'ES256'
   )
+  
   const jwt = await new jose.SignJWT({ 'urn:n3dium:claim': true })
     .setProtectedHeader({ alg: 'ES256' })
     .setIssuedAt()
